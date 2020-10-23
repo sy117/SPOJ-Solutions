@@ -1,44 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 10000011;
 
-int main() 
-{
-	int t;
-	scanf("%d",&t);
-	while(t--)
-	{
-		int n;
-		scanf("%d",&n);
-		int cnt,even,odd;
-		even=odd=0;
-		for(int i=2;i*i<=n;i++)
-		{
-			if(n%i==0)
-			{
-				cnt=0;
-				while(n%i==0)
-				{
-					cnt++;
-					n/=i;
-				}
-				if(cnt&1)
-		     	odd++;
-			    else
-	            even++;
+bool isPsycho(int x){
+	int even = 0, odd = 0;
+	for(int p=2; p*p <= x; p++){
+		int cnt = 0;
+		if(x%p == 0){
+			while(x%p == 0){
+				cnt++;
+				x /= p;
 			}
-			
 		}
-		if(n>1)
-		odd++;
-		if(even>odd)
-		{
-			printf("Psycho Number\n");
+		if(cnt > 0){
+			if(cnt&1) odd++;
+			else even++;
 		}
-		else
-		{
-			printf("Ordinary Number\n");
+	}
+	if(x>1) odd++;
+	return (even > odd);
+}
+
+int main() {
+	ios_base:: sync_with_stdio(false);
+	cin.tie(0);
+	int t;
+	cin >> t;
+	while(t--){
+		int x;
+		cin >>x;
+		if(isPsycho(x)){
+			cout << "Psycho Number\n";
+		}
+		else{
+			cout << "Ordinary Number\n";
 		}
 	}
 	return 0;

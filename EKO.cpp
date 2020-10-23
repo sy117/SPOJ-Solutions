@@ -1,44 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-	long long int N,M;
-	scanf("%lld%lld",&N,&M);
-	long long int a[N],i,max=0;
-	for(i=0;i<N;i++)
-	{
-	scanf("%lld",&a[i]);
-	if(a[i]>max)
-	   max=a[i];
+typedef long long int LL;
+
+LL woodAmount(LL arr[], LL N, LL h){
+	LL  val = 0;
+	for(int i=0; i<N; i++){
+		if(arr[i] > h)
+		val += (arr[i] - h);
 	}
-	long long int low,high,mid,wood,h=0;
-	low=0;
-	high=max;
-	while(low<=high)
-	{
+	return val;
+}
+
+int main() {
+	LL N, W;
+	cin >> N >> W;
+	LL arr[N], maxHeight = 0;
+	for(int i=0; i<N; i++){
+		cin >> arr[i];
+		maxHeight = max(maxHeight, arr[i]);
+	}
+	LL lo, hi, ans = 0;
 	
-		mid=low+((high-low)/2);
-		wood=0;
-		for(i=0;i<N;i++)
-		{
-		if((a[i]-mid)>0)
-		  wood+=(a[i]-mid);
+	lo = 0, hi = maxHeight;
+	while(lo <= hi){
+		LL mid = lo + (hi-lo)/2;
+		if(woodAmount(arr, N, mid) >= W){
+			ans = mid;
+			lo = mid+1;
 		}
-		 if(wood>M)
-		 {
-		 low=mid+1;
-		 if(mid>h)
-		 h=mid;
-		 }
-		 else if(wood<M)
-		 high=mid-1;
-		 else 
-		 {
-			h=mid;
-		    break;
-		 }
-	}	
-	printf("%lld\n",h);
+		else{
+			hi = mid-1;
+		}
+	}
+	cout << ans << "\n";
 	return 0;
 }
